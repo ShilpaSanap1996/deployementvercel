@@ -26,7 +26,9 @@ pipeline {
 
         stage('Deploy to Vercel') {
             steps {
-                bat 'vercel --token %VERCEL_TOKEN% --prod'
+                bat 'C:\\Users\\drvik\\AppData\\Roaming\\npm\\vercel.cmd vercel --token %VERCEL_TOKEN% --prod'
+               
+               
             }
         }
     }
