@@ -3,24 +3,35 @@ pipeline{
 
     environment {
         VERCEL_TOKEN = credentials('vercel-token')
-        
+
     }
 
-    stages {
-        stage('Build') {
+    stage('Install Node.js') {
             steps {
-                echo 'Building...'
+                // Run npm install using Windows CMD
+                bat 'npm install'
             }
         }
-        stage('Test') {
+
+        stage('Test React App') {
             steps {
-                echo 'Testing...'
+                // Run React tests
+                bat 'npm test -- --watchAll=false'
             }
         }
-        stage('Deploy') {
+        
+        stage('Build React App') {
             steps {
-                echo 'Deploying...'
+                // Run React build
+                bat 'npm run build'
             }
         }
-    }
+
+        stage('Deploy to Vercel') {
+            steps {
+                // Login to Vercel CLI using token (set as Jenkins secret)
+                bat 'vercel --token %VERCEL_TOKEN% --prod'
+            }
+        }
+    
 }
